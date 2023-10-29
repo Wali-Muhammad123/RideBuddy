@@ -12,6 +12,7 @@ import com.swmansion.gesturehandler.RNGestureHandlerPackage;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
 import java.util.Arrays; 
+import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -26,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
           protected List<ReactPackage> getPackages() {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
-      new RNGestureHandlerPackage() // Add this line
+      new RNGestureHandlerPackage(),
+      new SafeAreaContextPackage() // Add this line
     );
   }
 

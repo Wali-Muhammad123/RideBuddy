@@ -32,7 +32,6 @@ const GetOffersScreen = (() => {
                 ))}
             </ScrollView>
         </SafeAreaProvider>
-
     )
 })
 

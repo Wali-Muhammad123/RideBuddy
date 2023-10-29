@@ -39,8 +39,8 @@ import AppNavigator from './src/navigation/AppNavigator';
 function App(): JSX.Element {
 
   return (
-      // <RatingScreen/>
-      // <GetOffersScreen/>
+      //<RatingScreen/>
+      <GetOffersScreen/>
       // <OfferCard
       // riderName={'Rider Name'}
       // riderRating={"4.5"}
@@ -52,7 +52,7 @@ function App(): JSX.Element {
       // />
       //<InRideScreen pickupLocation={'Pickup Location'} dropOffLocation={'Dropoff Location'} />
       // <WaitingScreen />
-      <AppNavigator />
+      //<AppNavigator />
 
   );
 }
