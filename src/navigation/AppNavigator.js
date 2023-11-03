@@ -3,17 +3,9 @@ import {View, StatusBar, StyleSheet} from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 import AppStack from './MainApp';
 import AuthStack from './AuthStack';
+import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 
 
-const AuthLoadingScreen = (() => {
-    return (
-        <View>
-            <ActivityIndicator />
-            <StatusBar barStyle="default" />
-        </View>
-    )
-}
-)
 
 const AppNavigator = createSwitchNavigator(
     {

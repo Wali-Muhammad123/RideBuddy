@@ -33,27 +33,16 @@ import InRideScreen from './src/screens/inRideScreen';
 import Timer from './src/components/timer';
 import WaitingScreen from './src/screens/waitingScreen';
 import AppNavigator from './src/navigation/AppNavigator';
+import ConfirmAvailable from './src/screens/ConfirmAvailable';
+import { Provider } from 'react-native-paper';
+import { NavigationProvider } from 'react-navigation';
 
 
 
 function App(): JSX.Element {
 
   return (
-      //<RatingScreen/>
-      <GetOffersScreen/>
-      // <OfferCard
-      // riderName={'Rider Name'}
-      // riderRating={"4.5"}
-      // riderOffer={'Rider Offer'}
-      // riderDistance={3}
-      // riderVehicle={'Rider Vehicle'}
-      // arrivalTime={3}
-      // id={'1'}
-      // />
-      //<InRideScreen pickupLocation={'Pickup Location'} dropOffLocation={'Dropoff Location'} />
-      // <WaitingScreen />
-      //<AppNavigator />
-
+        <AppNavigator/>
   );
 }
 

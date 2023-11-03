@@ -1,11 +1,33 @@
 import * as React from 'react';
+import axios from 'axios';
 import {View, StyleSheet} from 'react-native';
 import {TextInput, Button, Text} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import api from '../utils/constants';
 
-
-const UserLoginScreen =(()=> {
+const UserLoginScreen =(({navigation})=> {
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
+    const submitHandler = async () => {
+        if (email.length === 0 || password.length === 0) {
+            alert("Please fill in all fields");
+            return;
+        }
+        await axios.post(api+'accounts/login/', {
+            email,
+            password,
+        }).then((response) => {
+            const {access, refresh} = response.data;
+            AsyncStorage.setItem('userToken', access);
+            AsyncStorage.setItem('refreshToken', refresh);
+            navigation.navigate('')
+
+        }).catch((error) => {
+            alert("Invalid credentials");
+        }
+        )
+        
+    }
     return (
         <View style={styles.container}>
             <Text
@@ -29,7 +51,7 @@ const UserLoginScreen =(()=> {
             mode="contained"
             style={{marginBottom: 10, width: 200, marginTop:20}}
             loading={false}
-            onPress={() => console.log('Pressed')}
+            onPress={submitHandler}
             >
                 Login
             </Button>
@@ -38,7 +60,7 @@ const UserLoginScreen =(()=> {
             mode="contained"
             style={{marginBottom: 10, width: 200, marginTop:20}}
             loading={false}
-            onPress={() => console.log('Pressed')}
+            onPress={() => navigation.navigate('Signup')}
             >
                 Sign Up
             </Button>

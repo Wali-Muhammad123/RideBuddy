@@ -13,6 +13,8 @@ import com.facebook.soloader.SoLoader;
 import java.util.List;
 import java.util.Arrays; 
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
+import com.swmansion.rnscreens.RNScreensPackage; // Add this line
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,7 +30,9 @@ public class MainApplication extends Application implements ReactApplication {
     return Arrays.<ReactPackage>asList(
       new MainReactPackage(),
       new RNGestureHandlerPackage(),
-      new SafeAreaContextPackage() // Add this line
+      new RNScreensPackage(),
+      new SafeAreaContextPackage(),
+      new AsyncStoragePackage() // Add this line
     );
   }
 
