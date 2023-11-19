@@ -4,8 +4,11 @@ import {View, StyleSheet} from 'react-native';
 import {TextInput, Button, Text} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../redux/thunks/userSliceThunks';
 
 const UserLoginScreen =(({navigation})=> {
+    const dispatch = useDispatch();
     const [email, setEmail] = React.useState("");
     const [password, setPassword] = React.useState("");
     const submitHandler = async () => {
@@ -13,20 +16,18 @@ const UserLoginScreen =(({navigation})=> {
             alert("Please fill in all fields");
             return;
         }
-        await axios.post(api+'accounts/login/', {
-            email,
-            password,
-        }).then((response) => {
-            const {access, refresh} = response.data;
-            AsyncStorage.setItem('userToken', access);
-            AsyncStorage.setItem('refreshToken', refresh);
-            navigation.navigate('')
-
-        }).catch((error) => {
-            alert("Invalid credentials");
-        }
-        )
-        
+        dispatch(userLogin({email,password})).then((action) => {
+            if (action.meta.requestStatus === 'fulfilled') {
+                console.log(">>>>>>Response data", action.payload);
+                if (action.payload.user.role === "customer"){
+                    navigation.navigate("CustomerHome");
+                } else {
+                    navigation.navigate("AvailableRides");
+                }
+            }
+        }).catch((error)=>{
+            alert(error.response.data.detail);
+        })
     }
     return (
         <View style={styles.container}>

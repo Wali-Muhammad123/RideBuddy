@@ -1,36 +1,60 @@
 import * as React from 'react';
 import { Appbar, Text } from 'react-native-paper';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View , FlatList} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import OfferCard from '../components/offerCard';
+import {useDispatch, useSelector} from 'react-redux';
+import { selectAccessToken } from '../redux/slices/userSlice';
+import axios from 'axios';
+import api from '../utils/constants';
 
 
-const GetOffersScreen = (() => {
-    const [offers, setOffers] = React.useState([])
+
+
+const GetOffersScreen = (({navigation}) => {
+    const [offers, setOffers] = React.useState([]);
+    const [accept, setAccept] = React.useState(null);
+    const accessToken = useSelector(selectAccessToken);
+    const onAccept = (id) => {
+        setAccept(id);
+    }
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(api + 'ride/available_riders/', {
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`
+                }
+            });
+            setOffers(response.data.results);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            // Handle the error appropriately
+        }
+    };
+    const reload = () => {
+        fetchData();
+    }
     React.useEffect(() => {
-        console.log("GetOffersScreen")
-
-    }, [offers])
+        fetchData();
+    }, []);
+    React.useEffect(()=>{
+        if(accept){
+            navigation.navigate('InRideCustomer');
+        }
+    },[accept])
     return (
         <SafeAreaProvider>
             <Appbar.Header>
                 <Appbar.Content title="Available Riders" />
-                <Appbar.Action icon="refresh" onPress={() => console.log('Pressed')} />
+                <Appbar.Action icon="refresh" onPress={() => reload()} />
                 <Appbar.BackAction onPress={() => console.log('Pressed')} />
             </Appbar.Header>
-            <ScrollView>
-                {offers.map((offer) => (
-                    <OfferCard
-                        riderName={offer.riderName ? offer.riderName : null}
-                        riderRating={offer.riderRating ? offer.riderRating : null}
-                        riderOffer={offer.riderOffer ? offer.riderOffer : null}
-                        riderDistance={offer.riderDistance ? offer.riderDistance : null}
-                        riderVehicle={offer.riderVehicle ? offer.riderVehicle : null}
-                        arrivalTime={offer.arrivalTime ? offer.arrivalTime : null}
-                        id={offer.id ? offer.id : null}
-                    />
-                ))}
-            </ScrollView>
+            {console.log(">>>>>>offers",offers)}
+            <FlatList
+                data={offers}
+                renderItem={({item}) => <OfferCard offer={item} handleAccept={onAccept}/>}
+                keyExtractor={({item}) => item?.id}
+            />
         </SafeAreaProvider>
     )
 })

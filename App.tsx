@@ -34,15 +34,18 @@ import Timer from './src/components/timer';
 import WaitingScreen from './src/screens/waitingScreen';
 import AppNavigator from './src/navigation/AppNavigator';
 import ConfirmAvailable from './src/screens/ConfirmAvailable';
-import { Provider } from 'react-native-paper';
 import { NavigationProvider } from 'react-navigation';
-
+import { Provider } from 'react-redux';
+import {store} from './src/redux/store';
 
 
 function App(): JSX.Element {
 
   return (
-        <AppNavigator/>
+       // <AppNavigator/>
+       <Provider store={store}>
+          <AppNavigator/>
+       </Provider>
   );
 }
 

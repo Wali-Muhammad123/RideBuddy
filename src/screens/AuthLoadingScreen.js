@@ -3,14 +3,16 @@ import { View, StatusBar, StyleSheet } from 'react-native';
 import { ActivityIndicator, Button } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { selectAccessToken } from '../redux/slices/userSlice';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
 const AuthLoadingScreen = (({navigation}) => {
     const [isLoading, setIsLoading] = React.useState(true);
-    const checkLoggedIn = async () => {
+    const accessToken = null;
+    const checkLoggedIn = (accessToken) => {
             try {
-                const value = await AsyncStorage.getItem('userToken');
-                if (value !== null) {
-                    navigation.navigate('Login');
+                console.log(accessToken);
+                if (accessToken != null) {
+                    navigation.navigate('Home');
                 } else {
                     navigation.navigate('Login');
                 }
@@ -20,7 +22,7 @@ const AuthLoadingScreen = (({navigation}) => {
             }
     }
     React.useEffect(() => {
-        checkLoggedIn();
+        checkLoggedIn(accessToken);
     }, []);
     return (
         <SafeAreaView>

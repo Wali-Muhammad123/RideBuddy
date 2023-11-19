@@ -13,8 +13,10 @@ import com.facebook.soloader.SoLoader;
 import java.util.List;
 import java.util.Arrays; 
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
-import com.swmansion.rnscreens.RNScreensPackage; // Add this line
+import com.swmansion.rnscreens.RNScreensPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage; 
+import com.airbnb.android.react.maps.MapsPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -25,22 +27,23 @@ public class MainApplication extends Application implements ReactApplication {
           return BuildConfig.DEBUG;
         }
 
-        @Override
-          protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(
-      new MainReactPackage(),
-      new RNGestureHandlerPackage(),
-      new RNScreensPackage(),
-      new SafeAreaContextPackage(),
-      new AsyncStoragePackage() // Add this line
-    );
-  }
 
         @Override
         protected String getJSMainModuleName() {
           return "index";
         }
-
+        @Override
+        protected List<ReactPackage> getPackages() {
+          return Arrays.<ReactPackage>asList(
+            new MainReactPackage(),
+            new RNGestureHandlerPackage(),
+            new RNScreensPackage(),
+            new SafeAreaContextPackage(),
+            new AsyncStoragePackage(),
+            new RNFusedLocationPackage(),
+            new MapsPackage()
+          );
+        }
         @Override
         protected boolean isNewArchEnabled() {
           return BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;

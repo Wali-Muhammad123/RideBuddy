@@ -4,9 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {TextInput, SegmentedButtons, Text, Button} from 'react-native-paper';
 import {View, StyleSheet} from 'react-native';
+import { useDispatch } from 'react-redux';
+import { userSignup } from '../redux/thunks/userSliceThunks';
 
 const UserSignupScreen = (({navigation}) =>{
-
+    const dispatch = useDispatch();
     const [firstName,setFirstName] = React.useState("");
     const [lastName,setLastName] = React.useState("");
     const [email,setEmail] = React.useState("");
@@ -24,25 +26,22 @@ const UserSignupScreen = (({navigation}) =>{
             alert("Passwords do not match");
             return;
         }
-        await axios.post(api+'accounts/register', {
-            "first_name":firstName,
-            "last_name":lastName,
-            "email":email,
-            "password1":password,
-            "password2":confirmPassword,
-            "role":role,
-        }).then((response) => {
-            console.log(response.data);
-            const {access, refresh} = response.data;
-            AsyncStorage.setItem('userToken', access);
-            AsyncStorage.setItem('refreshToken', refresh);
-            navigation.navigate('App');
-        }).catch((error) => {
-            console.log(error);
-            alert("Invalid credentials");
-            setLoading(false);
+        dispatch(userSignup({email,password,confirmPassword,firstName,lastName,role})).then((action) => {
+            if (action.meta.requestStatus === 'fulfilled') {
+                console.log(">>>>>>Response data", action.payload);
+                if (action.payload.user.role === "customer"){
+                    navigation.navigate("CustomerHome");
+                } else {
+                    navigation.navigate("AvailableRides");
+                }
+            }
         }
-        )
+        ).catch((error)=>{
+            alert(error.response.data.detail);
+        }
+        ).finally(()=>{
+            setLoading(false);
+        })
     }
 
     return (
@@ -102,8 +101,6 @@ const UserSignupScreen = (({navigation}) =>{
             onPress={submitHandler}
             >Sign Up</Button>
             </View>
-
-
     )
 })
 const styles = StyleSheet.create({
