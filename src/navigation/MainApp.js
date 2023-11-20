@@ -6,6 +6,7 @@ import WaitingScreen from "../screens/waitingScreen";
 import HomeScreen from "../screens/CustomerHomeScreen";
 import InRideCustomerScreen from "../screens/inRideCustomer";
 import AvailableRides from "../screens/AvailableRides";
+import PaymentScreen from "../screens/PaymentScreen";
 
 const AppStack = createStackNavigator(
     {
@@ -15,7 +16,8 @@ const AppStack = createStackNavigator(
         Rating: RatingScreen,
         GetOffers: GetOffersScreen,
         InRideCustomer: InRideCustomerScreen,
-        AvailableRides: AvailableRides
+        AvailableRides: AvailableRides,
+        PaymentScreen: PaymentScreen
     },
     {
         initialRouteName: "CustomerHome",

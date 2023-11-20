@@ -31,7 +31,7 @@ const InRideCustomerScreen = ({navigation}) => {
         </MapView>
         <View style={styles.buttonContainer}>
                 <Button 
-                onPress={() => navigation.navigate('Rating')}
+                onPress={() => navigation.navigate('PaymentScreen')}
                 title="End Ride"
                 />
             </View>
