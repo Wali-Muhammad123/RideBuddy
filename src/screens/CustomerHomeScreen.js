@@ -71,6 +71,7 @@ return (
     <View style={styles.overlay}>
         <GooglePlacesAutocomplete
         placeholder='Select Destination Location'
+        placeholderTextColor="black"
         onPress={(data, details = null) => {
           if (details) {
             setIsPlaceSelected(true);

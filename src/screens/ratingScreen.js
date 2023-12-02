@@ -8,6 +8,7 @@ import { selectRider, selectCustomer } from '../redux/slices/rideSlice';
 import { selectAccessToken } from '../redux/slices/userSlice';
 import { useSelector } from 'react-redux';
 
+
 const RatingScreen =(({navigation})=> {
     const [feedback, setFeedback] = React.useState("");
     const [rating, setRating] = React.useState(0);
@@ -18,23 +19,24 @@ const RatingScreen =(({navigation})=> {
       setRating(newRating); 
     };
     const handleSubmit = () => {
+        navigation.navigate('CustomerHome');
         // Submit the feedback and rating to the backend
-        axios.post( api + 'users/rating',{
-            "rider":rider,
-            "customer":customer,
-            "rating":rating,
-            "review":feedback
-        }, {
-            headers: {
-                Authorization: 'Bearer ' + accessToken
-            }
-        }).then((response) => {
-            navigation.navigate('Home');
-        }).catch((error) => {
-            console.log(">>>>>Error", error)
-            alert(error.response.data.detail);
-            navigation.navigate('Home');
-        })
+        // axios.post( api + 'users/rating',{
+        //     "rider":rider,
+        //     "customer":customer,
+        //     "rating":rating,
+        //     "review":feedback
+        // }, {
+        //     headers: {
+        //         Authorization: 'Bearer ' + accessToken
+        //     }
+        // }).then((response) => {
+        //     navigation.navigate('Home');
+        // }).catch((error) => {
+        //     console.log(">>>>>Error", error)
+        //     alert(error.response.data.detail);
+        //     navigation.navigate('Home');
+        // })
     };
     return (
         <View style={styles.container}>
